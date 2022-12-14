@@ -21,10 +21,10 @@
     </ul>
     <script>
         // Create a client instance
-        client = new Paho.MQTT.Client("broker.hivemq.com", 8884, "demo-mqtt-clientId");
+        client = new Paho.MQTT.Client("broker.hivemq.com", 1883, "demo-mqtt-clientId");
 
         // set callback handlers
-        client.onConnectionLost = onConnectionLost;
+        client.onConnectionLost = onConnectionLost; 
         client.onMessageArrived = onMessageArrived;
 
         // connect the client
@@ -35,7 +35,9 @@
         function onConnect() {
             // Once a connection has been made, make a subscription and send a message.
             console.log("onConnect");
-            client.subscribe("le380/sensors/kidbright");
+            // client.subscribe("le380/sensors/kidbright");
+            client.subscribe("cn466/sensor");
+
             //message = new Paho.MQTT.Message("Hello");
             //message.destinationName = "World";
             //client.send(message);
@@ -57,7 +59,7 @@
             const tempVal = document.getElementById("temp");
             tempVal.innerHTML = data.temp;
             const ldrVal = document.getElementById("ldr");
-            ldrVal.innerHTML = data.ldr;
+            ldrVal.innerHTML = data.humid;
         }
     </script>
 </body>
