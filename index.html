@@ -14,14 +14,16 @@
     <ul>
         <li>Type: <div id="topic"></div>
         </li>
-        <li>Temp: <div id="temp"></div>
+        <li>Temperature: <div id="temp"></div>
         </li>
-        <li>LDR: <div id="ldr"></div>
+        <li>Humidity: <div id="humid"></div>
+        </li>
+        <li>Pressure: <div id="pressure"></div>
         </li>
     </ul>
     <script>
         // Create a client instance
-        client = new Paho.MQTT.Client("broker.hivemq.com", 8000, "demo-mqtt-clientId");
+        client = new Paho.MQTT.Client("broker.hivemq.com", 1883, "demo-mqtt-clientId");
 
         // set callback handlers
         client.onConnectionLost = onConnectionLost; 
@@ -57,9 +59,12 @@
             const topicVal = document.getElementById("topic");
             topicVal.innerHTML = data.type;
             const tempVal = document.getElementById("temp");
-            tempVal.innerHTML = data.temp;
-            const ldrVal = document.getElementById("ldr");
-            ldrVal.innerHTML = data.humid;
+            tempVal.innerHTML = data.temperature;
+            const humidVal = document.getElementById("humid");
+            humidVal.innerHTML = data.ldr;
+            const pressureVal = document.getElementById("pressure");
+            pressureVal.innerHTML = data.pressure;
+            // ldrVal.innerHTML = data.humid;
         }
     </script>
 </body>
