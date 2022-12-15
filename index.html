@@ -12,7 +12,7 @@
     <h1>Mini Project 1</h1>
     <h1>MQTT data</h1>
     <ul>
-        <li>Type: <div id="topic"></div>
+        <li>object: <div id="object"></div>
         </li>
         <li>Temperature: <div id="temp"></div>
         </li>
@@ -56,14 +56,15 @@
         function onMessageArrived(message) {
             console.log("onMessageArrived:" + message.payloadString);
             const data = JSON.parse(message.payloadString);
-            const topicVal = document.getElementById("topic");
-            topicVal.innerHTML = data.type;
+            const objectVal = document.getElementById("object");
+            objectVal.innerHTML = JSON.stringify(data);
+           
             const tempVal = document.getElementById("temp");
-            tempVal.innerHTML = data.temperature;
+            tempVal.innerHTML = parseFloat(data.temperature).toFixed(2);
             const humidVal = document.getElementById("humid");
-            humidVal.innerHTML = data.humidity;
+            humidVal.innerHTML = parseFloat(data.humidity).toFixed(2);
             const pressureVal = document.getElementById("pressure");
-            pressureVal.innerHTML = data.pressure;
+            pressureVal.innerHTML = parseFloat(data.pressure).toFixed(2);
             // ldrVal.innerHTML = data.humid;
         }
     </script>
