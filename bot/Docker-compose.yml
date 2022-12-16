@@ -1,0 +1,20 @@
+version: "3"
+services:
+  web:
+    build: .
+    ports:
+      - "80:8080"
+    environment:
+      - MONGODB_URI=mongodb://sumet:kongkaew@cn466test-mongodb-1:27017?retryWrites=true&w=majority
+      - LINE_CH_SECRET=c986821d63931f8a3f943850d0029aad
+      - LINE_ACCESS_TOKEN=9QduUkCbdK5dm+/XO5HwNiinrcxaK3WyBbmpLx42XoUg1r6c2r2nGlEjIOPI7cH7fQlLT+pgGikOTqWpRCJqMtxsEVttbhDvdjLz+KCpWCD/fyJeb5n7mYZjxK4d1b2Vb3lYmz9hIYq65r1J8ttYJwdB04t89/1O/w1cDnyilFU=
+      - NGROK_AUTH_TOKEN=2EyKLw7wSJxeOyGdizndswCtEML_3z2QpCq9MhAi5Hw7rKc6R
+      - USER_ID=U2e87ba49dc97991307043eceb472063b
+
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"

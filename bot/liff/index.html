@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
+  <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+  <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+  <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+</head>
+
+<body>
+  <ons-navigator swipeable id="myNavigator" page="page1.html"></ons-navigator>
+
+  <template id="page1.html">
+    <ons-page id="page1">
+      <ons-toolbar>
+        <div class="center">CN466</div>
+      </ons-toolbar>
+
+      <p>This is the first page.</p>
+
+      <ons-list>
+        <ons-list-header>Sensors</ons-list-header>
+        <ons-list-item>
+          <div class="center">
+            Temperature
+          </div>
+          <div class="right">
+            <ons-input placeholder="waiting" id="temp_value"></ons-input>
+          </div>
+        </ons-list-item>
+
+      </ons-list>
+
+      <ons-list>
+        <ons-list-header>Sensors</ons-list-header>
+        <ons-list-item>
+          <div class="center">
+            Humidity
+          </div>
+          <div class="right">
+            <ons-input placeholder="waiting" id="humid_value"></ons-input>
+          </div>
+        </ons-list-item>
+
+      </ons-list>
+
+      <ons-button modifier="large" id="hello-button">Hello</ons-button>
+    </ons-page>
+  </template>
+
+  <script>
+    var data_idx = 0;
+    const update_value = async () => {
+      const resp = await fetch('/api/sensor')
+      const data = await resp.json()
+      if (data.idx > data_idx) {
+        var temp_value = document.getElementById('temp_value');
+        temp_value.innerText = data.temp;
+        var humid_value = document.getElementById('humid_value');
+        humid_value.innerText = data.humid;
+        data_idx = data.idx;
+        console.log('New Value');
+      } else {
+        console.log('Old Value');
+      }
+    }
+    document.addEventListener('init', () => {
+      var temp_value = document.getElementById('temp_value');
+    
+      setInterval(update_value, 2000);
+      liff.init({
+        liffId: '1657525181-kzl0leyj', //liff ID จาก website
+
+      }).then(() => {
+        var btn = document.getElementById('hello-button')
+        btn.onclick = async () => {
+          liff.sendMessages([{ type: "text", text: "hello world", },]);
+        }
+      }).catch((err) => {
+
+      }) 
+      
+    })
+  </script>
+
+</body>
+
+</html>
